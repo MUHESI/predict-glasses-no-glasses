@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+/*          new style
+================================
+*/
+
+:root {
+  --mainColor: black;
+  --bgColor: blue;
+  --primaryColor: blue;
+  --whiteColor: #fff;
+}
+
+.mainApp .app {
+  width: 80%;
+  margin: 5px auto;
+}
