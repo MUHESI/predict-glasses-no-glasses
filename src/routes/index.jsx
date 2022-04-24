@@ -8,7 +8,6 @@ import AboutMe from '../pages/AboutMe'
     <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route path="/aboutMe" element={<AboutMe />} />
         </Routes>
       </Router>
