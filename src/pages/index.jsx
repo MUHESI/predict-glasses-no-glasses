@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { imgDev } from "../constants/";
 import "../styles/styleHome.css";
 import "../styles/chargeFile.css";
-import { handleUploadFiles } from "../utils/controllerUploadFile";
 import { postAPI } from "../utils/fetchData";
 
 const Home = () => {
@@ -27,31 +25,22 @@ const Home = () => {
   // Load a picture
   const handleSubmit = async (img_) => {
     setIsLoading(true);
-    let fileUploaded = null;
     if (img_.file) {
-      fileUploaded = await handleUploadFiles.uploadFile(img_);
-      const { url } = fileUploaded;
-
-      // call API-IA
-      if (url) {
-        setDataForm({ ...dataForm, linkImg: url });
-        createPrediction(url);
-      }
-      //
-      console.log("url", url);
+      createPrediction(image.file);
     }
     setIsLoading(false);
   };
 
   const createPrediction = async () => {
-    // const res = await postAPI("");
-    const res = {
-      success: true,
-      prediction: "glasses"
-    };
+    const newFile = new FormData();
+    newFile.append("img", image.file);
+
+    const res = await postAPI("predict-glasses", newFile);
+
+    console.clear();
+    console.log("res", res);
 
     if (res) {
-      //
       //   setImage({ uri: null, file: null });
       setDataForm({ ...dataForm, prediction: res.prediction });
     }
@@ -62,10 +51,7 @@ const Home = () => {
 
   return (
     <div className='mainHome'>
-      <div className='contentResume'>
-        {/* resume your model here */}
-        Place the details of your model here
-      </div>
+      <div className='contentResume'>Place the details of your model here</div>
       <div className='contentChargeFile-res'>
         <div className='firstFlex'>
           <h2> Charger votre photo ici </h2>
