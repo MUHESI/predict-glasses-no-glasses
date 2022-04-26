@@ -12,8 +12,8 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataForm, setDataForm] = useState({
     attendu: "",
-    prediction: "",
-    linkImg: ""
+    linkImg: "",
+    data: ""
   });
 
   const loadImage = (e) =>
@@ -37,12 +37,9 @@ const Home = () => {
 
     const res = await postAPI("predict-glasses", newFile);
 
-    console.clear();
-    console.log("res", res);
-
     if (res) {
       //   setImage({ uri: null, file: null });
-      setDataForm({ ...dataForm, prediction: res.prediction });
+      setDataForm({ ...dataForm, data: res.data });
     }
   };
   useEffect(() => {
@@ -51,7 +48,7 @@ const Home = () => {
 
   return (
     <div className='mainHome'>
-      <div className='contentResume'>Place the details of your model here</div>
+      <div className='contentResume'>Place the details of your model</div>
       <div className='contentChargeFile-res'>
         <div className='firstFlex'>
           <h2> Charger votre photo ici </h2>
@@ -104,7 +101,15 @@ const Home = () => {
           </h4>
           <h4>
             Resultat de la prediction :
-            {dataForm.prediction !== "" && dataForm.prediction}
+            {dataForm.data !== "" && dataForm.data?.class}
+          </h4>
+          <h4>
+            Confiance :
+            {dataForm.data !== "" &&
+              dataForm?.data?.confiance.substring(
+                1,
+                dataForm?.data?.confiance.length - 1
+              )}
           </h4>
         </div>
       </div>
